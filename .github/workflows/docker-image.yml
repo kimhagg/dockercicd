@@ -26,17 +26,6 @@ jobs:
           docker build . -t ghcr.io/kimhagg/dockercicd:latest
           docker push ghcr.io/kimhagg/dockercicd:latest          
 
-  deploy_to_vm:
-    needs: build_and_push
-    runs-on: self-hosted
-
-    steps:
-      - name: Stop and remove existing container
-        run: sudo docker stop dockercicd || true && sudo docker rm dockercicd || true
-
-      - name: Start the new container
-        run: sudo docker run -d -p 80:8080 --name dockercicd ghcr.io/kimhagg/dockercicd:latest
-
   deploy_to_azure_container_apps:
     needs: build_and_push
     runs-on: ubuntu-latest
@@ -51,5 +40,5 @@ jobs:
         run: |
           az containerapp update \
             --name dockercicd \
-            --resource-group DockerDemoRG \
+            --resource-group dockercicd \
             --image ghcr.io/kimhagg/dockercicd:latest  
