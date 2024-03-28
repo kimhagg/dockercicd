@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+.temp
+provision_vm.sh
+
 # dotenv files
 .env
 
